@@ -1,0 +1,42 @@
+{% extends "globales/base.html" %}
+
+
+{% block sections %}
+
+<div class="container mt-4">
+  <h2>Mis clases de hoy</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Asignatura</th>
+        <th>Horario</th>
+        <th>Aula</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for grupo in clases %}
+        <tr>
+          <td>{{ grupo.asignatura.nombre }}</td>
+          <td>
+            {% for h in grupo.horarios %}
+              {{ h.hora_inicio }} - {{ h.hora_fin }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for h in grupo.horarios %}
+              {{ h.aula }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            <a href="{{ url_for('asistencias.generar_qr', grupo_id=grupo.id) }}" class="btn btn-primary btn-sm">
+              Generar QR
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
